@@ -1,0 +1,8 @@
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Add these -->
+    <color name="my_light_primary">#1DA1F2</color> <!-- Twitter Blue -->
+    <color name="my_light_on_primary">#FFFFFF</color> <!-- Text on primary -->
+</resources>
