@@ -43,7 +43,7 @@ class TweetActivity : AppCompatActivity() {
         FirebaseDatabase.getInstance().getReference().child("users").child(auth.uid.toString())
             .addListenerForSingleValueEvent(object :  ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val listOfTweets = snapshot.child()
+                    val listOfTweets = snapshot.child("listOfTweets")
                 }
 
                 override fun onCancelled(error: DatabaseError) {
