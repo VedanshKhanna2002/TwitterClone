@@ -3,6 +3,7 @@ package com.vedansh.twitterclone
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -43,8 +44,12 @@ class TweetActivity : AppCompatActivity() {
         FirebaseDatabase.getInstance().getReference().child("users").child(auth.uid.toString())
             .addListenerForSingleValueEvent(object :  ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val listOfTweets = snapshot.child("listOfTweets")
+                    val genericTypeIndicator = object : com.google.firebase.database.GenericTypeIndicator<MutableList<String>>() {}
+                    val listOfTweets = snapshot.child("listOftweets").getValue(genericTypeIndicator) ?: mutableListOf()
+                    listOfTweets.add(tweet)
+                    uploadTweetList(listOfTweets)
                 }
+
 
                 override fun onCancelled(error: DatabaseError) {
                     //TODO("Not yet implemented")
@@ -52,5 +57,10 @@ class TweetActivity : AppCompatActivity() {
 
 
             })
+    }
+    private fun uploadTweetList(listOfTweets : List<String>){
+        FirebaseDatabase.getInstance().getReference().child("users").child(auth.uid.toString()).child("listOftweets").setValue(listOfTweets)
+        Toast.makeText(this , "Tweets uploaded Sucessfully"  , Toast.LENGTH_SHORT).show()
+
     }
 }
