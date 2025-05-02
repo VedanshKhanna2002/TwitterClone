@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
 import com.vedansh.twitterclone.R
 import com.vedansh.twitterclone.data.SuggestedAccount
 import de.hdodenhof.circleimageview.CircleImageView
@@ -18,12 +19,14 @@ class SuggestedAccountAdapter(
     private val context  :Context,
     private val clickListener : ClickListener
 ) : RecyclerView.Adapter<SuggestedAccountAdapter.ViewHolder>() {
+    lateinit var auth : FirebaseAuth
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
 
         val view  = LayoutInflater.from(parent.context).inflate(R.layout.layout_suggested_account , parent , false)
+        auth = FirebaseAuth.getInstance()
         return ViewHolder(view)
     }
 
@@ -38,14 +41,21 @@ class SuggestedAccountAdapter(
             .into(holder.profileimage)
 
         holder.followbtn.setOnClickListener {
-            clickListener.onFollowClicked()
+            if(holder.followbtn.text == "Following"){
+                holder.followbtn.text = "Follow"
+            }else{
+                holder.followbtn.text = "Following"
+            }
+            clickListener.onFollowClicked(currentAccount.uid)
 
         }
     }
 
 
     interface ClickListener{
-        fun onFollowClicked()
+        fun onFollowClicked(uid  : String){
+
+        }
     }
 
     override fun getItemCount(): Int {

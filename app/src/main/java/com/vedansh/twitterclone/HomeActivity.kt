@@ -39,6 +39,8 @@ class HomeActivity : AppCompatActivity() {
         TabLayoutMediator(tablayout , viewPager) { tab  : TabLayout.Tab , position : Int ->
             when(position){
                 0 -> tab.text = "Account"
+                1 -> tab.text = "Following"
+                2 -> tab.text = "Followers"
                 else -> tab.text = "Tweets"
             }
         }.attach()
